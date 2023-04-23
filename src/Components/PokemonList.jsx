@@ -1,6 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { useGlobalContext } from '../Context/context'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
+import { useGlobalContext } from '../Context/context'
+import { Canvg } from 'canvg'
+
 
 const PokemonListContainer = styled.div`
   padding: 0 40px;
@@ -29,16 +32,25 @@ const Pokemon = styled.div`
   padding: 20px;
   gap: 10px;
   border-radius: 15px;
+  .pokemon-link {
+    text-decoration: none;
+    color: inherit;
+  }
+  .pokemon-link:active,
+  .pokemon-link:hover,
+  .pokemon-link:focus
+  {
+    color: white;
+  }
   h2 {
     margin-top: 8px;
   }
   & img {
-    width: 100%;
+    /* width: 100%; */
+    height: 120px;
   }
   & .image {
-    width: 120px;
-    
-    
+    width: 120px;  
   }
   & .image-background {
     width: 190px;
@@ -50,8 +62,8 @@ const Pokemon = styled.div`
     left: 45%;
   }
  & .inner-background{
-  /* background-color: lavender; */
   position: relative;
+  height: 150px;
   top:6%;
   left: 10%;
  } 
@@ -67,24 +79,25 @@ const Button = styled.button`
   margin: 20px 20px 0 0;
 `
 
-const pokemonListUrl = "https://pokeapi.co/api/v2/pokemon/?limit=10"
+const pokemonListUrl = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=10"
 const PokemonList = () => {
 
   const { pokemons, pokemonDetails, setPokemons, setPokemonDetails } = useGlobalContext()
   const [next, setNext] = useState()
   const [prev, setPrev] = useState()
+  const [dominantColor, setDominantColor] = useState('')
   const nextUrlRef = useRef(null)
   const prevUrlRef = useRef(null)
 
   useEffect(() => {
     let url = pokemonListUrl
-    if(next === nextUrlRef.current){
+    if (next === nextUrlRef.current) {
       url = next;
-    }else if(prev === prevUrlRef.current){
+    } else if (prev === prevUrlRef.current) {
       url = prev;
     }
     console.log(url);
-    if(!url){
+    if (!url) {
       return;
     }
     const getPokemon = async () => {
@@ -92,9 +105,19 @@ const PokemonList = () => {
         const response = await fetch(url)
         const data = await response.json()
         const { results, next, previous } = data;
-        // console.log(data)
+        
+        // console.log(nextUrlRef.current)
+        // console.log(prevUrlRef.current)
+
         nextUrlRef.current = next;
         prevUrlRef.current = previous;
+
+        // console.log(next)
+        // console.log(previous)
+        // console.log(nextUrlRef.current)
+        // console.log(prevUrlRef.current)
+        // console.log("LALALA")
+        
         getpokemonDetails(results)
         setPokemons(results);
       } catch (error) {
@@ -117,37 +140,62 @@ const PokemonList = () => {
         console.log(error.message)
       }
     }
+
     getPokemon()
   }, [next, prev])
 
+
   const handleNext = () => {
     setNext(nextUrlRef.current)
-    console.log(nextUrlRef.current)
+    // console.log(nextUrlRef.current)
   }
 
   const handlePrev = () => {
-    console.log(prevUrlRef.current)
+    // console.log(pokemons)
+
+    // console.log(prevUrlRef.current)
     setPrev(prevUrlRef.current)
+    
   }
+
 
   return (
     <PokemonListContainer>
       <h1>Pokemons</h1>
       <Pokemons>
-        {pokemons?.map((pokemon) => (
-          <Pokemon>
-            <div className='details'>
-              <h2>{pokemon.name}</h2>
-            </div>
-            <div className='image-background'>
-              <div className='inner-background'>
-                <div className="image">
-                  <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/1.svg" />
-                </div>
-              </div>
-            </div>
-          </Pokemon>
-        ))}
+        {pokemons?.map((pokemon) => {
+          const currPokeDetails = pokemonDetails.find((details) => pokemon.name === details.name)
+          // console.log(currPokeDetails);
+          // const { id } = currPokeDetails;
+
+          const imageURL = currPokeDetails?.sprites.other.dream_world.front_default;
+          // console.log(imageURL)
+          // to pass props to Link component we need to pass an object to 'to' prop with pathname and state property. Then state is accessible in the respective component using useLocation().
+          return (
+            <Pokemon>
+              {
+                currPokeDetails &&
+                <Link 
+                  to={`/pokemon/${currPokeDetails.id}`}
+                  state={{imageURL}}
+                  className='pokemon-link' 
+                >
+                  {console.log(typeof imageURL)}
+                  <div className='details'>
+                    <h2>{pokemon.name}</h2>
+                  </div>
+                  <div className='image-background'>
+                    <div className='inner-background'>
+                      <div className="image">
+                        <img src={imageURL} alt={pokemon.name}/>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              }
+            </Pokemon>
+          )
+        })}
 
 
       </Pokemons>
