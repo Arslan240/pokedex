@@ -215,28 +215,31 @@ const About = () => {
           </div>
           <div className="flex-col">
           {breedingDetails.length > 0 &&
+              
               breedingDetails.map((detail) => {
-                const [key, value] = Object.entries(detail)
-                console.log(key[0], key[1])
-
-                if(key[0] === 'genderName'){
-                  console.log("Ddd")
-                  const regexMale = /\bmale\b/
-                  const regexFemale = /\bfemale\b/
-                  if(key[1].toLowerCase().match(regexMale)){
-                    console.log(key[1])
-                    return <span>{<GiMale color='#223eda'/>} {key[1]}</span>
-                  }
-                  else if(key[1].toLowerCase().match(regexFemale)){
-                    console.log(key[1])
-                    return <span><GiFemale color='#de3434'/> {key[1]}</span>
-                  }
-                  else {
-                    return <span><FaGenderless color='#ffd437'/> {key[1]}</span>
-                  }
+                const regexMale = /\bmale\b/i;
+                const regexFemale = /\bfemale\b/i;
+                const [key, value] = Object.entries(detail)[0];
+              
+                if (key === "genderName") {
+                  const icon = value.toLowerCase().match(regexMale)
+                    ? <GiMale color='#223eda'/>
+                    : value.toLowerCase().match(regexFemale)
+                    ? <GiFemale color='#de3434'/>
+                    : <FaGenderless color='#ffd437'/>;
+              
+                  return (
+                    <span key={key}>
+                      {icon} {value}
+                    </span>
+                  );
                 }
-
-                return ( <span>{key[1]}</span> )
+              
+                return (
+                  <span key={key}>
+                    {value}
+                  </span>
+                );
               })
             }
           </div>
