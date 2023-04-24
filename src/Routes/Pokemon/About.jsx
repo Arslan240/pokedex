@@ -212,7 +212,7 @@ const About = () => {
         <h2>Breeding</h2>
         <div className="flex-row row-breeding">
           <div className="flex-col headings">
-            <span> gender</span>
+            <span>gender</span>
             <span>egg groups</span>
             <span>egg cycle</span>
           </div>

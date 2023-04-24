@@ -130,6 +130,7 @@ const PokemonList = () => {
         const promisesArray = results?.map(async result => {
           const response = await fetch(result.url)
           const data = response.json()
+          // console.log(data)
           return data;
         })
         const mappedResults = await Promise.all(promisesArray)
@@ -163,24 +164,25 @@ const PokemonList = () => {
     <PokemonListContainer>
       <h1>Pokemons</h1>
       <Pokemons>
-        {pokemons?.map((pokemon) => {
+        {pokemons.length > 0 & pokemonDetails.length > 0 &&
+          pokemons.map((pokemon) => {
           const currPokeDetails = pokemonDetails.find((details) => pokemon.name === details.name)
           // console.log(currPokeDetails);
           // const { id } = currPokeDetails;
 
           const imageURL = currPokeDetails?.sprites.other.dream_world.front_default;
           // console.log(imageURL)
+
           // to pass props to Link component we need to pass an object to 'to' prop with pathname and state property. Then state is accessible in the respective component using useLocation().
           return (
-            <Pokemon>
+            <Pokemon key={currPokeDetails.id}>
               {
-                currPokeDetails &&
                 <Link 
                   to={`/pokemon/${currPokeDetails.id}`}
                   state={{imageURL}}
                   className='pokemon-link' 
                 >
-                  {console.log(typeof imageURL)}
+                  {/* {console.log(typeof imageURL)} */}
                   <div className='details'>
                     <h2>{pokemon.name}</h2>
                   </div>
