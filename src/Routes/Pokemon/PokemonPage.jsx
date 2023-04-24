@@ -11,7 +11,7 @@ const PokemonPageContainer = styled.div`
   .back-button{
     margin: 0;
     .back-icon {
-      padding: 10px 20px;
+      padding: 10px 0px 0px 20px;
       size: 50px;
     }
   }
@@ -19,7 +19,7 @@ const PokemonPageContainer = styled.div`
   .head-container {
     padding-top: 20px;
     color: white;
-    height: 50vh;
+    height: 43vh;
   }
 
   .hero-section {
@@ -43,9 +43,9 @@ const PokemonPageContainer = styled.div`
     border-top-right-radius: 30px;
     
     nav {
-      background-color: red;
-      min-width: 500px;
-      max-width: 600px;
+      /* background-color: red; */
+      /* min-width: 500px; */
+      max-width: 400px;
       margin: 0 auto;
       padding-top: 15px;
       
@@ -54,22 +54,29 @@ const PokemonPageContainer = styled.div`
         justify-content: space-between;
         margin: 0;
         padding: 0;
+        font-size: 1.1rem;
       }
       
       a{
         text-decoration: none;
-        color: black;
-        padding: 10px; 
+        color: #7b7b7b;
+        font-weight: bolder;
+        padding: 15px;
+
       }
       a.active{
         &{
-          border-bottom: 2px solid black;
+          /* background-color: #ececec; */
+          border-bottom: 2px solid #3a4ca8;
+          border-top-left-radius: 10px;
+          border-top-right-radius: 10px;
+          color: black;
         }
       }
       
       li {
         list-style: none;
-        padding: 10px;
+        padding: 10px 0px;
       }
       
     }
@@ -86,7 +93,7 @@ const ImageContainer = styled.div`
   position: relative;
   top: ${() => {
     console.log((window.innerHeight) / 5)
-    return (window.innerHeight) / 6
+    return (window.innerHeight) / 9
   }
   }px;
   img {
@@ -96,9 +103,9 @@ const ImageContainer = styled.div`
 `
 
 const OutletContainer = styled.div`
-  background-color: red;
-  min-width: 500px;
-  max-width: 600px;
+  /* background-color: red; */
+  /* min-width: 500px; */
+  max-width: 400px;
   margin: 0 auto;
 `
 
@@ -108,7 +115,7 @@ const PokemonPage = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    navigate(`about`)
+    navigate(`about`, {replace: true})
   }, [])
 
   console.log("PokemonPage rendered")
