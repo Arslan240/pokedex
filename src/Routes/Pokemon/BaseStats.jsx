@@ -48,7 +48,7 @@ const BaseStats = () => {
   const { id } = useParams();
   const [stats, setStats] = useState([])
   const [pokeStatValue, setPokeStatValue] = useState(0)
-  console.log(id, "in BaseStats")
+  // console.log(id, "in BaseStats")
 
   useEffect(() => {
     const statsURL = `https://pokeapi.co/api/v2/pokemon/${id}`
@@ -109,12 +109,12 @@ const BaseStats = () => {
           {
             !!stats &&
             stats.map((stat) => {
-              return <Progress value={stat.base_stat} max={100} color={"#007bff"} key={stat.stat.name}/>
+              return <Progress value={stat.base_stat} max={100} key={stat.stat.name} name={stat.stat.name}/>
             })
           }
           {
             !!pokeStatValue &&
-            <Progress value={pokeStatValue} max={700} color={"#007bff"} />
+            <Progress value={pokeStatValue} max={700} name={'total'}/>
 
           }
         </div>
