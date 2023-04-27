@@ -17,8 +17,8 @@ const Bar = styled.div`
     }
     .firstImage,
     .secondImage {
-        max-height: 120px;
-        max-width: 120px;
+        max-height: 110px;
+        max-width: 110px;
     }
 
     .conversion {
@@ -26,7 +26,7 @@ const Bar = styled.div`
         flex-direction: column;
         align-items: center;
         color: #6f36e1;
-        font-size: 0.9rem;
+        font-size: 0.8rem;
     }
 
 `
