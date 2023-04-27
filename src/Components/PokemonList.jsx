@@ -6,13 +6,15 @@ import { Canvg } from 'canvg'
 
 
 const PokemonListContainer = styled.div`
-  padding: 0 40px;
+  padding:  40px;
+  /* padding-bottom: 40px; */
   max-width: 701px;
   margin: 0 auto;
 `
 
 const Pokemons = styled.div`
   display: flex;
+  justify-content: center;
   gap: 20px;
   flex-wrap: wrap;
   @media screen and (max-width:700px){
@@ -79,6 +81,111 @@ const Button = styled.button`
   margin: 20px 20px 0 0;
 `
 
+
+// const pokemonListUrl = 'https://pokeapi.co/api/v2/pokemon/?offset=0&limit=10';
+
+// const PokemonList = () => {
+//   const { pokemons, pokemonDetails, setPokemons, setPokemonDetails } = useGlobalContext();
+//   const [next, setNext] = useState(null);
+//   const [prev, setPrev] = useState(null);
+//   const [isLoading, setIsLoading] = useState(true);
+
+//   useEffect(() => {
+//     let url = pokemonListUrl;
+//     if (next) {
+//       url = next;
+//     } else if (prev) {
+//       url = prev;
+//     }
+
+//     if (!url) {
+//       return;
+//     }
+
+//     const fetchData = async () => {
+//       setIsLoading(true);
+
+//       try {
+//         const response = await fetch(url);
+//         const data = await response.json();
+//         const { results, next, previous } = data;
+
+//         const pokemonDetailsPromises = results.map(async (result) => {
+//           const response = await fetch(result.url);
+//           const data = await response.json();
+//           return data;
+//         });
+
+//         const pokemonDetailsData = await Promise.all(pokemonDetailsPromises);
+
+//         setPokemons(results);
+//         setPokemonDetails(pokemonDetailsData);
+//         setNext(next);
+//         setPrev(previous);
+//       } catch (error) {
+//         console.log(error.message);
+//       } finally {
+//         setIsLoading(false);
+//       }
+//     };
+
+//     fetchData();
+//   }, [next, prev, setPokemons, setPokemonDetails]);
+
+//   const handleNext = () => {
+//     setPokemons([]);
+//     setPokemonDetails([]);
+//     setNext(next);
+//   };
+
+//   const handlePrev = () => {
+//     setPokemons([]);
+//     setPokemonDetails([]);
+//     setPrev(prev);
+//   };
+
+//   return (
+//     <PokemonListContainer>
+//       <h1>Pokemons</h1>
+
+//       <Pokemons>
+//         {isLoading ? (
+//           <h3>Loading</h3>
+//         ) : (
+//           pokemons.map((pokemon, index) => {
+//             const currPokeDetails = pokemonDetails[index];
+//             const imageURL = currPokeDetails?.sprites?.other?.dream_world?.front_default;
+
+//             return (
+//               <Pokemon key={currPokeDetails.id}>
+//                 <Link to={`/pokemon/${currPokeDetails.id}`} state={{ imageURL }} className="pokemon-link">
+//                   <div className="details">
+//                     <h2>{pokemon.name}</h2>
+//                   </div>
+
+//                   <div className="image-background">
+//                     <div className="inner-background">
+//                       <div className="image">
+//                         <img src={imageURL} alt={pokemon.name} />
+//                       </div>
+//                     </div>
+//                   </div>
+//                 </Link>
+//               </Pokemon>
+//             );
+//           })
+//         )}
+//       </Pokemons>
+
+//       <Button onClick={handlePrev}>Prev</Button>
+//       <Button onClick={handleNext}>Next</Button>
+//     </PokemonListContainer>
+//   );
+// };
+
+// export default PokemonList;
+
+
 const pokemonListUrl = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=10"
 const PokemonList = () => {
 
@@ -86,6 +193,7 @@ const PokemonList = () => {
   const [next, setNext] = useState()
   const [prev, setPrev] = useState()
   const [dominantColor, setDominantColor] = useState('')
+  const [isLoading, setIsLoading] = useState(true)
   const nextUrlRef = useRef(null)
   const prevUrlRef = useRef(null)
 
@@ -106,22 +214,25 @@ const PokemonList = () => {
         const data = await response.json()
         const { results, next, previous } = data;
         
-        // console.log(nextUrlRef.current)
-        // console.log(prevUrlRef.current)
+        console.log(nextUrlRef.current)
+        console.log(prevUrlRef.current)
 
         nextUrlRef.current = next;
         prevUrlRef.current = previous;
 
-        // console.log(next)
-        // console.log(previous)
-        // console.log(nextUrlRef.current)
-        // console.log(prevUrlRef.current)
-        // console.log("LALALA")
+        console.log(next)
+        console.log(previous)
+        console.log(nextUrlRef.current)
+        console.log(prevUrlRef.current)
+        console.log("LALALA")
         
         getpokemonDetails(results)
         setPokemons(results);
       } catch (error) {
         console.log(error.message)
+      }
+      finally{
+        setIsLoading(false)
       }
     }
 
@@ -134,7 +245,7 @@ const PokemonList = () => {
           return data;
         })
         const mappedResults = await Promise.all(promisesArray)
-        // console.log(mappedResults)
+        console.log(mappedResults)
 
         setPokemonDetails(mappedResults)
       } catch (error) {
@@ -147,26 +258,36 @@ const PokemonList = () => {
 
 
   const handleNext = () => {
+    // setIsLoading(true)
+    setPokemons([])
+    setPokemonDetails([])
     setNext(nextUrlRef.current)
     // console.log(nextUrlRef.current)
   }
-
+  
   const handlePrev = () => {
     // console.log(pokemons)
-
+    
     // console.log(prevUrlRef.current)
+    setPokemons([])
+    setPokemonDetails([])
+    // setIsLoading(true)
     setPrev(prevUrlRef.current)
     
   }
 
+  console.log(pokemonDetails)
 
   return (
     <PokemonListContainer>
       <h1>Pokemons</h1>
       <Pokemons>
-        { !!(pokemons.length > 0) & pokemonDetails.length > 0 &&
+        { isLoading ?
+          <h3>Loading</h3>
+        : !!(pokemons.length > 0) && !!(pokemonDetails.length > 0) &&
           pokemons.map((pokemon) => {
           const currPokeDetails = pokemonDetails.find((details) => pokemon.name === details.name)
+          console.log(pokemonDetails)
           // console.log(currPokeDetails);
           // const { id } = currPokeDetails;
 
