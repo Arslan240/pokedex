@@ -5,7 +5,7 @@ import Progress from '../../Components/Progress'
 
 const BaseStatsContainer = styled.div`
   display: flex;
-  padding: 25px 0px;
+  padding: 25px;
   gap: 35px;
 
   .flex-col{
@@ -43,33 +43,42 @@ const BaseStatsContainer = styled.div`
 `
 
 
+
 const BaseStats = () => {
-  const {id} = useParams();
+  const { id } = useParams();
   const [stats, setStats] = useState([])
-  const [pokeStatValue, setPokeStatValue] = useState()
+  const [pokeStatValue, setPokeStatValue] = useState(0)
   console.log(id, "in BaseStats")
-  
+
   useEffect(() => {
     const statsURL = `https://pokeapi.co/api/v2/pokemon/${id}`
     const getPokemonStats = async () => {
       const response = await fetch(statsURL)
       const data = await response.json()
-      console.log(data)
+      // console.log(data)
       setStats(data.stats)
     }
     getPokemonStats()
-  }, [id])
-  
+
+    return () => {
+      setStats([])
+    }
+
+  }, [])
+
   useEffect(() => {
-    let pokeValue = 0;
-    stats.map((stat) => {
-      pokeValue = pokeValue + stat.base_stat
-    })
-    console.log("pokeValue", pokeValue)
-    setPokeStatValue(pokeValue)
-  }, [stats])
-  
-  console.log(stats)
+    if(stats.length > 0){
+      const pokeValue = stats.reduce((acc, stat) => acc + stat.base_stat, 0);
+      setPokeStatValue(pokeValue);
+    }
+
+    return () => {
+      setPokeStatValue(0);
+    }
+  }, [stats]);
+
+
+  // console.log(stats)
   return (
     <BaseStatsContainer>
       <div className="stats-name flex-col">
@@ -84,29 +93,23 @@ const BaseStats = () => {
       <div className="stats-details flex-row">
         <div className="inner-details flex-col">
           {
-            stats &&
+            !!stats &&
             stats.map((stat, index) => {
               return (
-              <span className="value" key={stat.stat.name}>{stat.base_stat}</span>
-              )})
+                <span className="value" key={stat.stat.name}>{stat.base_stat}</span>
+              )
+            })
           }
           {
             !!pokeStatValue &&
             <span className="value" >{pokeStatValue}</span>
           }
-          {/* <span className="value">45</span>
-          <span className="value">45</span>
-          <span className="value">45</span>
-          <span className="value">45</span>
-          <span className="value">45</span>
-          <span className="value">245</span> */}
         </div>
         <div className="progress-bars flex-col">
           {
-            !!stats.length > 0 &&
+            !!stats &&
             stats.map((stat) => {
-              
-              return <Progress value={stat.base_stat} max={100} color={"#007bff"} />
+              return <Progress value={stat.base_stat} max={100} color={"#007bff"} key={stat.stat.name}/>
             })
           }
           {

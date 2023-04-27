@@ -1,7 +1,14 @@
 import { useEffect, useState } from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
-
+const progressAnimation = keyframes`
+  from {
+    width: 0%;
+  }
+  to {
+    width: ${(props) => (props.percentage ? props.percentage : 0)}%;
+  }
+`;
 
 const ProgressBarContainer = styled.div`
   width: 100%;
@@ -16,17 +23,16 @@ const ProgressBar = styled.div`
   width: ${(props) => (props.percentage ? props.percentage : 0)}%;
   background-color: ${(props) => (props.color ? props.color : "#007bff")};
   border-radius: inherit;
-  transition: width 0.5s ease-in-out;
+  animation: ${progressAnimation} 0.5s ease-in-out;
 `;
 
-function Progress({ value, max,color }) {
-  const [animPercentage, setAnimPercentage] = useState()
+function Progress({ value, max, color }) {
+  const [animPercentage, setAnimPercentage] = useState(0);
 
-  // this ables the animation to be visible otherwise, animation happens even before user can even see it.
   useEffect(() => {
-    setAnimPercentage((value / max) * 100)
-  })
-  console.log(animPercentage)
+    setAnimPercentage((value / max) * 100);
+  }, [value, max, color]);
+
   return (
     <ProgressBarContainer className="bar">
       <ProgressBar percentage={animPercentage} color={color} />
@@ -36,21 +42,52 @@ function Progress({ value, max,color }) {
 
 export default Progress;
 
-// const Progress = styled.progress`
-//     width: 100%;
-//     height: 50px;
-//     border-radius: 50%;
-//     background-color: #f3f3f3;
-//     box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
-// `
 
-// function ProgressBar({ value, max }) {
+/**
+ * THIS ONE WAS NOT WORKING NOT PROPERLY
+ */
+// import { useEffect, useState } from "react";
+// import styled from "styled-components";
+
+
+// const ProgressBarContainer = styled.div`
+//   width: 100%;
+//   height: 5px;
+//   background-color: #ddd;
+//   border-radius: 10px;
+//   overflow: hidden;
+// `;
+
+// const ProgressBar = styled.div`
+//   height: 100%;
+//   width: ${(props) => (props.percentage ? props.percentage : 0)}%;
+//   background-color: ${(props) => (props.color ? props.color : "#007bff")};
+//   border-radius: inherit;
+// `;
+
+// function Progress({ value, max,color }) {
+//   const [animPercentage, setAnimPercentage] = useState(0)
+
+//   useEffect(() => {
+//     setAnimPercentage((value / max) * 100)
+
+//     // add transition code inside useEffect hook
+//     const progressBars = document.querySelectorAll('.bar .progress')
+//     progressBars.forEach(bar => {
+//       bar.style.transition = 'width 0.5s ease-in-out'
+//     })
+
+//     return () => {
+//       setAnimPercentage(0)
+//     }
+//   }, [value, max, color])
+//   console.log(animPercentage)
+
 //   return (
-//     <Progress
-//       value={value}
-//       max={max}
-//     />
+//     <ProgressBarContainer className="bar">
+//       <ProgressBar percentage={animPercentage} color={color} className="progress" />
+//     </ProgressBarContainer>
 //   );
 // }
 
-// export default ProgressBar
+// export default Progress;
