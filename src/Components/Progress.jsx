@@ -21,21 +21,21 @@ const ProgressBarContainer = styled.div`
 const ProgressBar = styled.div`
   height: 100%;
   width: ${(props) => (props.percentage ? props.percentage : 0)}%;
-  background-color: ${(props) => (props.color ? props.color : "#007bff")};
+  background-color: ${({theme,name}) => ( theme.colors[name] || "#007bff")};
   border-radius: inherit;
   animation: ${progressAnimation} 0.5s ease-in-out;
 `;
 
-function Progress({ value, max, color }) {
+function Progress({ value, max, name}) {
   const [animPercentage, setAnimPercentage] = useState(0);
 
   useEffect(() => {
     setAnimPercentage((value / max) * 100);
-  }, [value, max, color]);
+  }, [value, max, name]);
 
   return (
     <ProgressBarContainer className="bar">
-      <ProgressBar percentage={animPercentage} color={color} />
+      <ProgressBar percentage={animPercentage} name={name}/>
     </ProgressBarContainer>
   );
 }

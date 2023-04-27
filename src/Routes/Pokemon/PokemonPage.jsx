@@ -58,6 +58,7 @@ const PokemonPageContainer = styled.div`
       }
       
       a{
+        box-sizing: border-box;
         text-decoration: none;
         color: #9a9898;
         font-weight: bolder;
@@ -77,6 +78,7 @@ const PokemonPageContainer = styled.div`
       li {
         list-style: none;
         padding: 10px 0px;
+        box-sizing: border-box;
       }
       
     }
@@ -144,16 +146,16 @@ const PokemonPage = () => {
           <nav>
             <ul>
               <li>
-                <NavLink to={`/pokemon/${id}/about`}>About</NavLink>
+                <NavLink to={`/pokemon/${id}/about`} style={{ padding: "10px", boxSizing: "border-box" }}>About</NavLink>
               </li>
               <li>
-                <NavLink to={`/pokemon/${id}/stats`}>Stats</NavLink>
+                <NavLink to={`/pokemon/${id}/stats`} style={{ padding: "10px", boxSizing: "border-box" }}>Stats</NavLink>
               </li>
               <li>
-                <NavLink to={`/pokemon/${id}/evolution`}>Evolution</NavLink>
+                <NavLink to={`/pokemon/${id}/evolution`} style={{ padding: "10px", boxSizing: "border-box" }}>Evolution</NavLink>
               </li>
               <li>
-                <NavLink to={`/pokemon/${id}/moves`}>Moves</NavLink>
+                <NavLink to={`/pokemon/${id}/moves`} style={{ padding: "10px", boxSizing: "border-box" }}>Moves</NavLink>
               </li>
             </ul>
           </nav>

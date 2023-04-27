@@ -9,26 +9,6 @@ const StyledMoveCard = styled.div`
     padding: 20px 10px;
     border-radius: 15px;
     background-color: ${({theme, type}) => [theme.colors[type]] || 'blue'};
-    
-    /* target the scrollbar specifically in webkit-based browsers */
-  ::-webkit-scrollbar {
-    width: 6px; /* make the scrollbar thinner */
-    height: 6px; /* make the scrollbar shorter */
-  }
-
-  /* track and thumb styles for the scrollbar */
-  ::-webkit-scrollbar-track {
-    background: #f1f1f1; /* color of the scrollbar track */
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: #888; /* color of the scrollbar thumb */
-    border-radius: 3px; /* rounded corners for the thumb */
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: #555; /* color of the scrollbar thumb on hover */
-  }
 
     .icon {
         width: 50px;
@@ -38,15 +18,14 @@ const StyledMoveCard = styled.div`
     }
     .details {
         font-size: .8rem;
-        /* color: white; */
     }
 `
 
 const MoveCard = (props) => {
-    console.log("MoveCard")
+    // console.log("MoveCard")
     const {name, type } = props;
     // console.log(props.theme)
-    console.log(name)
+    // console.log(name)
   return (
     <StyledMoveCard type={type}>
         <div className="icon">
