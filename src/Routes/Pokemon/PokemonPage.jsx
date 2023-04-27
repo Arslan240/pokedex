@@ -2,7 +2,6 @@ import { useParams, NavLink, Outlet, useLocation, useNavigate } from 'react-rout
 import styled from 'styled-components';
 import { useGlobalContext } from '../../Context/context'
 import { BiArrowBack } from 'react-icons/bi'
-import PokeballSVG from '../../assets/PokeballSVG';
 import { useEffect } from 'react';
 
 const PokemonPageContainer = styled.div`
@@ -13,6 +12,10 @@ const PokemonPageContainer = styled.div`
     .back-icon {
       padding: 10px 0px 0px 20px;
       size: 50px;
+      cursor: pointer;
+    }
+    .back-icon:hover {
+      opacity: 0.8;
     }
   }
   
@@ -126,11 +129,15 @@ const PokemonPage = () => {
   const imageURL = currPokemon?.sprites.other.dream_world.front_default;
   // const imageURL = useLocation().state?.imageURL || ''
 
+  const handleClickBack = () => {
+    navigate(-1)
+  }
+
   return (
     <PokemonPageContainer>
       <div className='head-container'>
         <div className="back-button">
-          <BiArrowBack className='back-icon' size={30} />
+          <BiArrowBack className='back-icon' size={30} onClick={handleClickBack}/>
         </div>
         <div className='hero-section'>
           <h1>{currPokemon.name}</h1>

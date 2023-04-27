@@ -185,7 +185,7 @@ const About = () => {
             <span>abilities</span>
           </div>
           <div className="flex-col">
-            {speciesDetails.length > 0 &&
+            {speciesDetails.length > 0 ?
 
               speciesDetails.map((detail) => {
                 const [key, value] = Object.entries(detail)[0]; // we are using [0] index here, because .entries return an array of [{key:value},{key:value}] pairs. In our case we only have one key value pair. So we just access it directly as it'll be the first entry in array. 
@@ -204,6 +204,7 @@ const About = () => {
                   </span>
                 );
               })
+              : <h3>Loading</h3>
             }
           </div>
         </div>
@@ -217,7 +218,7 @@ const About = () => {
             <span>egg cycle</span>
           </div>
           <div className="flex-col">
-            {breedingDetails.length > 0 &&
+            {breedingDetails.length > 0 ?
 
               breedingDetails.map((detail) => {
                 const regexMale = /\bmale\b/i;
@@ -244,6 +245,7 @@ const About = () => {
                   </span>
                 );
               })
+              : <h3>Loading</h3>
             }
           </div>
         </div>

@@ -67,7 +67,7 @@ const BaseStats = () => {
   }, [])
 
   useEffect(() => {
-    if(stats.length > 0){
+    if (stats.length > 0) {
       const pokeValue = stats.reduce((acc, stat) => acc + stat.base_stat, 0);
       setPokeStatValue(pokeValue);
     }
@@ -105,19 +105,22 @@ const BaseStats = () => {
             <span className="value" >{pokeStatValue}</span>
           }
         </div>
-        <div className="progress-bars flex-col">
-          {
-            !!stats &&
-            stats.map((stat) => {
-              return <Progress value={stat.base_stat} max={100} key={stat.stat.name} name={stat.stat.name}/>
-            })
-          }
-          {
-            !!pokeStatValue &&
-            <Progress value={pokeStatValue} max={700} name={'total'}/>
-
-          }
-        </div>
+        {!!stats && (
+          <div className="progress-bars flex-col">
+            {stats.map((stat) => (
+              <Progress
+                value={stat.base_stat}
+                max={100}
+                key={stat.stat.name}
+                name={stat.stat.name}
+              />
+            ))}
+            {!!pokeStatValue && (
+              <Progress value={pokeStatValue} max={700} name={"total"} />
+            )}
+          </div>
+        )}
+        {!stats && <h3>Loading</h3>}
       </div>
     </BaseStatsContainer>
   )

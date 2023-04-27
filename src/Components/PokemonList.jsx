@@ -259,6 +259,9 @@ const PokemonList = () => {
 
   const handleNext = () => {
     // setIsLoading(true)
+    if(nextUrlRef.current == null){
+      return;
+    }
     setPokemons([])
     setPokemonDetails([])
     setNext(nextUrlRef.current)
@@ -269,6 +272,9 @@ const PokemonList = () => {
     // console.log(pokemons)
     
     // console.log(prevUrlRef.current)
+    if(prevUrlRef.current == null){
+      return;
+    }
     setPokemons([])
     setPokemonDetails([])
     // setIsLoading(true)

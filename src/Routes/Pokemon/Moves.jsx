@@ -17,7 +17,7 @@ const StyledMovesContainer = styled.div`
 const Moves = () => {
 
   const { id } = useParams();
-  const [moves, setMoves] = useState([])
+  const [moves, setMoves] = useState()
 
   console.log(id, "in Moves")
 
@@ -57,10 +57,12 @@ const Moves = () => {
 
     <StyledMovesContainer>
       {
-        !!(moves.length > 0) &&
+        moves ? 
         moves.map(move => (
           <MoveCard key={move.name} type={move.type} name={move.name} />
-        ))}
+        ))
+        : <h3>Loading</h3>
+      }
     </StyledMovesContainer>
 
   )

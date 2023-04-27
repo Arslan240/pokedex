@@ -29,7 +29,7 @@ const MoveCard = (props) => {
   return (
     <StyledMoveCard type={type}>
         <div className="icon">
-            <img src={`/src/assets/icons/${type}.svg`} alt={`${name}-icon`}/>
+            <img src={`/assets/icons/${type}.svg`} alt={`${name}-icon`}/>
         </div>
         <div className='details'><span>{name}</span></div>
     </StyledMoveCard>

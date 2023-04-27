@@ -114,7 +114,7 @@ const Evolution = () => {
     <EvolutionContainer>
       <div className="container flex">
         {
-          evolutionImageURLs.length > 0 &&
+          evolutionImageURLs.length > 0 ?
           evolutionImageURLs.map((url, index) => {
             return index < evolutionImageURLs.length - 1
               ? <EvolutionBar
@@ -125,6 +125,7 @@ const Evolution = () => {
                 />
               : null
           })
+          : <h3>Loading</h3>
         }
       </div>
     </EvolutionContainer>
