@@ -5,7 +5,7 @@ import EvolutionBar from '../../Components/EvolutionBar'
 
 const EvolutionContainer = styled.div`
   overflow: auto;
-  padding: 25px;
+  padding: 20px;
 `
 
 
