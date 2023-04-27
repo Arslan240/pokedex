@@ -67,7 +67,7 @@ const PokemonPageContainer = styled.div`
       a.active{
         &{
           /* backgr ound-color: #ececec; */
-          border-bottom: 2px solid #3a4ca8;
+          border-bottom: 2px solid #1e3edc;
           border-top-left-radius: 10px;
           border-top-right-radius: 10px;
           color: black;

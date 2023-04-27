@@ -164,7 +164,7 @@ const PokemonList = () => {
     <PokemonListContainer>
       <h1>Pokemons</h1>
       <Pokemons>
-        {pokemons.length > 0 & pokemonDetails.length > 0 &&
+        { !!(pokemons.length > 0) & pokemonDetails.length > 0 &&
           pokemons.map((pokemon) => {
           const currPokeDetails = pokemonDetails.find((details) => pokemon.name === details.name)
           // console.log(currPokeDetails);
