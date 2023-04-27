@@ -44,7 +44,7 @@ const AboutContainer = styled.div`
   }
   .headings {
     font-weight: 500;
-    color: #7b7b7b;
+    color: #9a9898;
   }
 `
 

@@ -59,14 +59,14 @@ const PokemonPageContainer = styled.div`
       
       a{
         text-decoration: none;
-        color: #7b7b7b;
+        color: #9a9898;
         font-weight: bolder;
         padding: 15px;
 
       }
       a.active{
         &{
-          /* background-color: #ececec; */
+          /* backgr ound-color: #ececec; */
           border-bottom: 2px solid #3a4ca8;
           border-top-left-radius: 10px;
           border-top-right-radius: 10px;
@@ -131,7 +131,7 @@ const PokemonPage = () => {
           <BiArrowBack className='back-icon' size={30} />
         </div>
         <div className='hero-section'>
-          <h1>Pokemon {id}</h1>
+          <h1>{currPokemon.name}</h1>
           <div className="absolute-container">
             {imageURL && <ImageContainer>
               <img src={imageURL} alt='pokemon-image' />
