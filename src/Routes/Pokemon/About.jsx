@@ -9,7 +9,7 @@ import { FaGenderless } from 'react-icons/fa';
 
 const AboutContainer = styled.div`
   margin-top: 20px;
-  padding: 10px;
+  padding: 10px 25px;
   max-width: 400px;
 
   .species,
