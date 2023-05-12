@@ -3,8 +3,10 @@ import styled from 'styled-components';
 import { useGlobalContext } from '../../Context/context'
 import { BiArrowBack } from 'react-icons/bi'
 import { useEffect } from 'react';
+import { motion } from 'framer-motion'
 
-const PokemonPageContainer = styled.div`
+
+const PokemonPageContainer = styled(motion.div)`
   background-color: rgb(124, 190, 179); 
 
   .back-button{
@@ -120,7 +122,7 @@ const PokemonPage = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    navigate(`about`, {replace: true})
+    navigate(`about`, { replace: true })
   }, [])
 
   console.log("PokemonPage rendered")
@@ -134,10 +136,31 @@ const PokemonPage = () => {
   }
 
   return (
-    <PokemonPageContainer>
+    <PokemonPageContainer
+      initial="initial"
+      animate="animate"
+      exit="exit"
+      variants={{
+        initial: {
+          opacity: 0,
+          x: -100
+        },
+        animate: {
+          opacity: 1,
+          x: 0
+        },
+        exit: {
+          opacity: 0,
+          x: 100
+        }
+      }}
+      transition={{
+        delay: 0.2,
+      }}
+    >
       <div className='head-container'>
         <div className="back-button">
-          <BiArrowBack className='back-icon' size={30} onClick={handleClickBack}/>
+          <BiArrowBack className='back-icon' size={30} onClick={handleClickBack} />
         </div>
         <div className='hero-section'>
           <h1>{currPokemon.name}</h1>

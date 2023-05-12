@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import MoveCard from '../../Components/MoveCard';
 import styled from 'styled-components';
+import { motion } from 'framer-motion'
 
-const StyledMovesContainer = styled.div`
+
+const StyledMovesContainer = styled(motion.div)`
   display: flex;
   justify-content: center;
   padding: 20px;
@@ -57,11 +59,11 @@ const Moves = () => {
 
     <StyledMovesContainer>
       {
-        moves ? 
-        moves.map(move => (
-          <MoveCard key={move.name} type={move.type} name={move.name} />
-        ))
-        : <h3>Loading</h3>
+        moves ?
+          moves.map(move => (
+            <MoveCard key={move.name} type={move.type} name={move.name} />
+          ))
+          : <h3>Loading</h3>
       }
     </StyledMovesContainer>
 

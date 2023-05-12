@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import styled, { keyframes } from "styled-components";
+import { motion } from 'framer-motion'
 
 const progressAnimation = keyframes`
   from {
@@ -10,7 +11,7 @@ const progressAnimation = keyframes`
   }
 `;
 
-const ProgressBarContainer = styled.div`
+const ProgressBarContainer = styled(motion.div)`
   width: 100%;
   height: 5px;
   background-color: #ddd;
@@ -18,15 +19,15 @@ const ProgressBarContainer = styled.div`
   overflow: hidden;
 `;
 
-const ProgressBar = styled.div`
+const ProgressBar = styled(motion.div)`
   height: 100%;
   width: ${(props) => (props.percentage ? props.percentage : 0)}%;
-  background-color: ${({theme,name}) => ( theme.colors[name] || "#007bff")};
+  background-color: ${({ theme, name }) => (theme.colors[name] || "#007bff")};
   border-radius: inherit;
   animation: ${progressAnimation} 0.5s ease-in-out;
 `;
 
-function Progress({ value, max, name}) {
+function Progress({ value, max, name }) {
   const [animPercentage, setAnimPercentage] = useState(0);
 
   useEffect(() => {
@@ -34,8 +35,26 @@ function Progress({ value, max, name}) {
   }, [value, max, name]);
 
   return (
-    <ProgressBarContainer className="bar">
-      <ProgressBar percentage={animPercentage} name={name}/>
+    <ProgressBarContainer
+      className="bar"
+      initial="initial"
+      animate="animate"
+      exit="exit"
+      variants={{
+        initial: {
+          opacity: 0,
+          x: 100
+        },
+        animate: {
+          opacity: 1,
+          x: 0
+        },
+        exit: {
+          opacity: 0
+        }
+      }}
+    >
+      <ProgressBar percentage={animPercentage} name={name} />
     </ProgressBarContainer>
   );
 }

@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import EvolutionBar from '../../Components/EvolutionBar'
+import {motion} from 'framer-motion'
 
-const EvolutionContainer = styled.div`
+
+const EvolutionContainer = styled(motion.div)`
   overflow: auto;
   padding: 20px;
 `

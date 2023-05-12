@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import Progress from '../../Components/Progress'
+import {motion} from 'framer-motion'
 
-const BaseStatsContainer = styled.div`
+const BaseStatsContainer = styled(motion.div)`
   display: flex;
   padding: 25px;
   gap: 35px;

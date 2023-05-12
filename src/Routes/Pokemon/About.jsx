@@ -6,8 +6,9 @@ import 'react-icons/gi'
 import 'react-icons/fa'
 import { GiFemale, GiMale } from 'react-icons/gi';
 import { FaGenderless } from 'react-icons/fa';
+import { motion } from 'framer-motion'
 
-const AboutContainer = styled.div`
+const AboutContainer = styled(motion.div)`
   margin-top: 20px;
   padding: 10px 25px;
   max-width: 400px;
@@ -65,15 +66,15 @@ const AboutContainer = styled.div`
  */
 const About = () => {
   const { id } = useParams();
-  const { pokemonDetails } = useGlobalContext();
+  // const { pokemonDetails } = useGlobalContext();
   const [speciesDetails, setSpeciesDetails] = useState([])
   const [breedingDetails, setBreedingDetails] = useState([])
 
   const pokeDetailsURL = `https://pokeapi.co/api/v2/pokemon/${id}/`
   const speciesURL = `https://pokeapi.co/api/v2/evolution-chain/${id}/`
-  const genderURL = `https://pokeapi.co/api/v2/gender/${id}/`
+  // const genderURL = `https://pokeapi.co/api/v2/gender/${id}/`
   const eggGroupsURL = `https://pokeapi.co/api/v2/pokemon-species/${id}/`
-  const eggCyclesURL = `https://pokeapi.co/api/v2/pokemon-species/${id}/`
+  // const eggCyclesURL = `https://pokeapi.co/api/v2/pokemon-species/${id}/`
 
 
   useEffect(() => {
@@ -125,7 +126,7 @@ const About = () => {
         const genderRate = data.gender_rate;
         const gender = determineGender(data);
         return gender
-        console.log(`Gender ratio: ${genderRate}, Gender: ${gender}`);
+        // console.log(`Gender ratio: ${genderRate}, Gender: ${gender}`);
       } catch (error) {
         console.error(error);
       }
@@ -175,7 +176,26 @@ const About = () => {
   console.log(breedingDetails)
   console.log(id, "in About")
   return (
-    <AboutContainer>
+    <AboutContainer
+      initial="initial"
+      animate="animate"
+      exit="exit"
+      variants={{
+        initial: {
+          opacity: 0
+        },
+        animate: {
+          opacity: 1
+        },
+        exit: {
+          opacity: 0
+        }
+      }}
+      transition={{
+        delay: 0.2,
+        // staggerChildren: 0.1
+      }}
+    >
       <div className="species">
         <div className="flex-row row-species">
           <div className="flex-col headings">
