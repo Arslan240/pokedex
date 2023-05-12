@@ -54,7 +54,7 @@ function Progress({ value, max, name }) {
         }
       }}
     >
-      <ProgressBar percentage={animPercentage} name={name} />
+      <ProgressBar percentage={animPercentage} name={name} className="progress" />
     </ProgressBarContainer>
   );
 }
