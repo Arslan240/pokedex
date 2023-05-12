@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import Progress from '../../Components/Progress'
-import {motion} from 'framer-motion'
+import { motion } from 'framer-motion'
 
 const BaseStatsContainer = styled(motion.div)`
   display: flex;
@@ -39,8 +39,6 @@ const BaseStatsContainer = styled(motion.div)`
     gap: 0;
     margin-bottom: 18px;
   }
-
-
 `
 
 
@@ -81,7 +79,15 @@ const BaseStats = () => {
 
   // console.log(stats)
   return (
-    <BaseStatsContainer>
+    <BaseStatsContainer
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{
+        duration: 0.5,
+        // delay:0.2
+      }}
+    >
       <div className="stats-name flex-col">
         <span className='stat-name'>HP</span>
         <span className='stat-name'>attack</span>

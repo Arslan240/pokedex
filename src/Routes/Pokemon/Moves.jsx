@@ -16,6 +16,23 @@ const StyledMovesContainer = styled(motion.div)`
   overflow: scroll;
 `
 
+const containerVariants = {
+  offscreen: {
+    opacity: 0,
+    scale:0.7,
+  },
+  onscreen: {
+    opacity: 1,
+    scale:1,
+    transition: {
+      when: "beforeChildren",
+      // type: "spring",
+      // bounce: 0.4,
+      duration: 0.5
+    }
+  }
+}
+
 const Moves = () => {
 
   const { id } = useParams();
@@ -57,14 +74,20 @@ const Moves = () => {
   console.log(moves)
   return (
 
-    <StyledMovesContainer>
+    <StyledMovesContainer
+      initial="offscreen"
+      animate="onscreen"
+    // viewport={{ once: true }}
+    >
+
       {
         moves ?
           moves.map(move => (
-            <MoveCard key={move.name} type={move.type} name={move.name} />
+            <MoveCard key={move.name} type={move.type} name={move.name} containerVariants={containerVariants} />
           ))
           : <h3>Loading</h3>
       }
+
     </StyledMovesContainer>
 
   )
