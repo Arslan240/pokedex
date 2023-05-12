@@ -1,8 +1,9 @@
 import React from 'react'
 import { AiOutlineArrowRight } from 'react-icons/ai'
 import styled from 'styled-components'
+import { motion } from 'framer-motion'
 
-const Bar = styled.div`
+const Bar = styled(motion.div)`
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -31,6 +32,8 @@ const Bar = styled.div`
 
 `
 
+
+
 const EvolutionBar = ({ firstImage, secondImage, minLevel }) => {
     // console.log("Evolution Bar")
     // console.log(min_level)
@@ -45,7 +48,7 @@ const EvolutionBar = ({ firstImage, secondImage, minLevel }) => {
             </div>
             <div className='conversion'>
                 <span>{!!minLevel && minLevel}</span>
-                <AiOutlineArrowRight size={17}/>
+                <AiOutlineArrowRight size={17} />
             </div>
             <div >
                 <img src={secondImage} className='secondImage' />

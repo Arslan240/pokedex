@@ -2,13 +2,34 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import EvolutionBar from '../../Components/EvolutionBar'
-import {motion} from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 
 
 const EvolutionContainer = styled(motion.div)`
   overflow: auto;
   padding: 20px;
 `
+
+const evolutionVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      delayChildren: 1
+    }
+  }
+}
+
+const itemVariants = {
+  hidden: {
+    opacity: 0,
+    y: 20,
+  },
+  show: {
+    opacity: 1,
+    y: 0,
+  },
+};
 
 
 const Evolution = () => {
@@ -78,12 +99,12 @@ const Evolution = () => {
           const response = await fetch(pokemonDetailsURL)
           currPokeDetails = await response.json()
           const imageURL = currPokeDetails?.sprites.other.dream_world.front_default;
-          
-          if(index > 0){
-            return {imageURL, min_level: evolution.min_level}
+
+          if (index > 0) {
+            return { imageURL, min_level: evolution.min_level }
           }
 
-          return {imageURL};
+          return { imageURL };
         } catch (error) {
           console.log(error.message)
         }
@@ -114,22 +135,40 @@ const Evolution = () => {
 
   return (
     <EvolutionContainer>
-      <div className="container flex">
+      <motion.div
+        className="container flex"
+        variants={evolutionVariants}
+        initial="hidden"
+        animate="show"
+      >
         {
           evolutionImageURLs.length > 0 ?
-          evolutionImageURLs.map((url, index) => {
-            return index < evolutionImageURLs.length - 1
-              ? <EvolutionBar
-                key={evolutionImageURLs[index].imageURL}
-                firstImage={evolutionImageURLs[index].imageURL} 
-                secondImage={evolutionImageURLs[index + 1].imageURL} 
-                minLevel={evolutionImageURLs[index + 1]?.min_level}
-                />
-              : null
-          })
-          : <h3>Loading</h3>
+            evolutionImageURLs.map((url, index) => {
+              return index < evolutionImageURLs.length - 1
+                ?
+                <motion.div
+                  key={evolutionImageURLs[index].imageURL}
+                  variants={itemVariants}
+                  initial="hidden"
+                  animate="show"
+                  exit="hidden"
+                  transition={{
+                    duration: 0.5,
+                    delay: index * 0.2,
+                  }}
+                >
+                  <EvolutionBar
+                    firstImage={evolutionImageURLs[index].imageURL}
+                    secondImage={evolutionImageURLs[index + 1].imageURL}
+                    minLevel={evolutionImageURLs[index + 1]?.min_level}
+                  />
+                </motion.div>
+
+                : null
+            })
+            : <h3>Loading</h3>
         }
-      </div>
+      </motion.div>
     </EvolutionContainer>
   )
 }
